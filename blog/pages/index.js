@@ -4,6 +4,8 @@ import {Row, Col, List} from 'antd'
 import {CalendarOutlined, FireOutlined, FolderOutlined } from '@ant-design/icons'
 
 import Header from '../components/Header'
+import Author from '../components/Author'
+
 import '../static/style/pages/index.css'
 
 export default function Home() {
@@ -42,7 +44,9 @@ export default function Home() {
             )}
           />
         </Col>
-        <Col className="comm-right" xs={0} sm={0} md={7} lg={5} xl={4}>右侧</Col>
+        <Col className="comm-right" xs={0} sm={0} md={7} lg={5} xl={4}>
+          <Author />
+        </Col>
       </Row>
     </div>
   )
