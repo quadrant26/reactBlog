@@ -6,6 +6,7 @@ import {CalendarOutlined, FireOutlined, FolderOutlined } from '@ant-design/icons
 import Header from '../components/Header'
 import Author from '../components/Author'
 import Advert from '../components//Advert'
+import Footer from '../components/Footer'
 
 import '../static/style/pages/index.css'
 
@@ -50,6 +51,8 @@ export default function Home() {
           <Advert />
         </Col>
       </Row>
+      
+      <Footer />
     </div>
   )
 }
