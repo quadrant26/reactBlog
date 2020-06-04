@@ -5,6 +5,7 @@ import {CalendarOutlined, FireOutlined, FolderOutlined } from '@ant-design/icons
 
 import Header from '../components/Header'
 import Author from '../components/Author'
+import Advert from '../components//Advert'
 
 import '../static/style/pages/index.css'
 
@@ -46,6 +47,7 @@ export default function Home() {
         </Col>
         <Col className="comm-right" xs={0} sm={0} md={7} lg={5} xl={4}>
           <Author />
+          <Advert />
         </Col>
       </Row>
     </div>
