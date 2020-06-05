@@ -6,6 +6,8 @@ import ReactMarkdown from 'react-markdown'
 import MarkdownNavBar from 'markdown-navbar'
 import 'markdown-navbar/dist/navbar.css';
 
+import axios from 'axios'
+
 import Header from '../components/Header'
 import Author from '../components/Author'
 import Advert from '../components//Advert'
@@ -105,6 +107,22 @@ const Detailed = () => {
       <Footer />
     </div>
   )
+}
+
+Detailed.getInitialProps = async(context) => {
+  console.log(context.query.id)
+
+  let id = context.query.id;
+
+  const promise = new Promise( (reslove, reject) => {
+    axios('http://127.0.0.1:7001/default/getArticleById/'+id)
+    .then( (res) => {
+      console.log(res)
+      reslove(res.data.data[0])
+    })
+  })
+  
+  return await promise
 }
 
 export default Detailed;
