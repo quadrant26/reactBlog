@@ -10,6 +10,8 @@ import hljs from 'highlight.js';
 // import 'highlight.js/styles/github.css';
 import 'highlight.js/styles/monokai-sublime.css';
 
+import Tocify from '../components/tocify.tsx'
+
 import axios from 'axios'
 
 import Header from '../components/Header'
@@ -22,6 +24,11 @@ import '../static//style/pages/detailed.css'
 const Detailed = (props) => {
 
   const render = new marked.Renderer();
+  const tocify = new Tocify()
+  render.heading = function(text, level, raw) {
+    const anchor = tocify.add(text, level);
+    return `<a id="${anchor}" href="#${anchor}" class="anchor-fix"><h${level}>${text}</h${level}></a>\n`;
+  };
 
   marked.setOptions({
     renderer: render, 
@@ -38,6 +45,13 @@ const Detailed = (props) => {
   });
 
   let markedStr = `
+
+    # 第一季
+
+    # 第二季
+
+    # 第三季
+    
     \`\`\`
       yarn add marked
       yarn add highlight
@@ -88,7 +102,7 @@ const Detailed = (props) => {
             <div className="bread-div">
               <Breadcrumb>
                 <Breadcrumb.Item><a href="/">首页</a></Breadcrumb.Item>
-                <Breadcrumb.Item><a href="/list">w文章</a></Breadcrumb.Item>
+                <Breadcrumb.Item><a href="/list">文章列表</a></Breadcrumb.Item>
                 <Breadcrumb.Item>文章详情</Breadcrumb.Item>
               </Breadcrumb>
             </div>
@@ -116,7 +130,9 @@ const Detailed = (props) => {
           <Affix offsetTop={5}>
             <div className="detailed-nav comm-box">
               <div className="nav-title">文章目录</div>
-              
+              <div className="toc-list">
+                {tocify && tocify.render()}
+              </div>
             </div>
           </Affix>
         </Col>
