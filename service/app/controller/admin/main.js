@@ -7,6 +7,7 @@ class MainController extends Controller{
         this.ctx.body = 'hi api';
     }
 
+    // 后台登录接口
     async checkLogin (){
         let userName = this.ctx.request.body.userName
         let password = this.ctx.request.body.password
@@ -22,6 +23,13 @@ class MainController extends Controller{
             this.ctx.body = {"data": "登录失败"}
         }
     }
+
+    // 后台文章分类信息
+    async getTypeInfo (){
+        const resType = await this.app.mysql.select('type')
+        this.ctx.body = {data: resType}
+    }
+
 }
 
 module.exports = MainController
