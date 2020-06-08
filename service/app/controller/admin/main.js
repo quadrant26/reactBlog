@@ -30,6 +30,20 @@ class MainController extends Controller{
         this.ctx.body = {data: resType}
     }
 
+    // 添加文章
+    async addArticle(){
+        let tempAricle = this.ctx.request.body;
+        console.log(tempAricle);
+        const result = await this.app.mysql.insert('article', tempAricle)
+        const insertSucces = result.affectedRows === 1
+        const insertId = result.insertId;
+
+        this.ctx.body = {
+            isSuccess: insertSucces,
+            insertId: insertId
+        }
+    }
+
 }
 
 module.exports = MainController

@@ -80,7 +80,7 @@ const Detailed = (props) => {
   '>>> cccccccccc\n\n'+
   '``` var a=11; ```'
 
-  let html = marked(props.article_cointent) 
+  let html = marked(props.article_content) 
 
   return (
     <div className="container">
@@ -108,7 +108,7 @@ const Detailed = (props) => {
                 <span><FireOutlined />{props.view_count}人</span>
               </div>
               {/* <div className="detailed-content">
-                {props.article_cointent}
+                {props.article_content}
               </div> */}
               <div className="detailed-content"
                 dangerouslySetInnerHTML={{__html: html}}

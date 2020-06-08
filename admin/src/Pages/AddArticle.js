@@ -30,7 +30,7 @@ function AddArticle(props){
             header: { 'Access-Control-Allow-Origin':'*' },
             withCredentials: true
         }).then( (res) => {
-            if(res.data.data == "没有登录"){
+            if(res.data.data === "没有登录"){
                 localStorage.removeItem("openId")
                 props.history.push('/')
             }else{
@@ -92,6 +92,31 @@ function AddArticle(props){
         }
 
         message.success("校验通过")
+        let dataProps = {}
+        dataProps.type_id = selectedType
+        dataProps.title = articleTitle
+        dataProps.article_content = articleContent
+        dataProps.introduce = introducemd
+        let datetext = showDate.replace('-', '/') // 把字符串转换成时间戳
+        dataProps.addTime = (new Date(datetext).getTime())
+
+        if(articleId === 0){
+            console.log('articleId: ' + articleId)
+            dataProps.view_count = Math.ceil( Math.random()*1000)+100;
+            axios({
+                method: 'post',
+                url: servicePath.addArticle,
+                data: dataProps,
+                withCredentials: true
+            }).then( (res) => {
+                setArticleId(res.data.insertId)
+                if(res.data.isSuccess){
+                    message.success("文章保存成功")
+                }else{
+                    message.error("文章保存失败")
+                }
+            })
+        }
     }
 
     return (
