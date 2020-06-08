@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import Head from 'next/head'
 import {Row, Col, List, Breadcrumb} from 'antd'
 import {CalendarOutlined, FireOutlined, FolderOutlined } from '@ant-design/icons'
+import Link from 'next/link'
 
 import Header from '../components/Header'
 import Author from '../components/Author'
@@ -11,6 +12,10 @@ import Footer from '../components/Footer'
 import '../static/style/pages/list.css'
 import Axios from 'axios'
 import servicePath from '../config/servicePath'
+
+import marked from 'marked'
+import hljs from 'highlight.js';
+import 'highlight.js/styles/monokai-sublime.css';
 
 const MyList = (list) => {
 
@@ -23,6 +28,28 @@ const MyList = (list) => {
       {"title": "鹊桥仙·纤云弄巧", "content": "纤云弄巧，飞星传恨，银汉迢迢暗度。金风玉露一相逢，便胜却人间无数。 柔情似水，佳期如梦，忍顾鹊桥归路！两情若是久长时，又岂在朝朝暮暮。"}
     ]
   )
+  
+  let markedStr2 = `# P01:课程介绍和环境搭建\n # P02:来个Hello World 初始Vue3.0\n`;
+
+  const renderer = new marked.Renderer();
+  marked.setOptions({
+    renderer: renderer,
+    gfm: true,
+    pedantic: false,
+    sanitize: false,
+    tables: true,
+    breaks: false,
+    smartLists: true,
+    smartypants: false,
+    sanitize:false,
+    xhtml: false,
+    highlight: function (code) {
+      return hljs.highlightAuto(code).value;
+    }
+  }); 
+
+  let html = marked(markedStr2) 
+
   return (
     <div className="container">
       <Head>
@@ -45,13 +72,20 @@ const MyList = (list) => {
               dataSource={Mylist}
               renderItem={item=>(
                 <List.Item>
-                  <div className="list-title">{item.title}</div>
+                  <div className="list-title">
+                    <Link href={{pathname:'/detailed',query:{id:item.id}}}>
+                      <a>{item.title}</a>
+                    </Link>
+                  </div>
                   <div className="list-icons">
                     <span><CalendarOutlined />2020-06-03</span>
                     <span><FolderOutlined />详细</span>
                     <span><FireOutlined />2020人</span>
                   </div>
                   <div className="list-content">{item.content}</div>
+                  <div className="detailed-content"
+                    dangerouslySetInnerHTML={{__html: html}}
+                  ></div>
                 </List.Item>
               )}
             />
@@ -70,9 +104,11 @@ const MyList = (list) => {
 
 MyList.getInitialProps = async (context) => {
   let id = context.query.id;
+  console.log(id)
   const promise = new Promise( (resolve, reject) => {
     Axios(servicePath.getListById+id).then( res => {
-      resolve(res)
+      console.log(res.data)
+      resolve(res.data)
     })
   })
 
