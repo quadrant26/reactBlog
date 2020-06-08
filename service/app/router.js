@@ -9,4 +9,5 @@ module.exports = app => {
   // router.get('/list', controller.home.list)
 
   require('./router/default')(app)
+  require('./router/admin')(app)
 };
