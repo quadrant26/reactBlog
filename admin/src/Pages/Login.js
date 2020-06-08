@@ -36,17 +36,13 @@ function Login (props){
             withCredentials: true
         }).then( (res) => {
             setIsLoading(false)
-            if( res.data.data == "登录成功"){
+            if( res.data.data === "登录成功"){
                 localStorage.setItem('openId', res.data.openId)
                 props.history.push('/index')
             }else{
                 message.error("用户名或密码错误")
             }
         })
-
-        setTimeout(()=>{
-            setIsLoading(false)
-        },1000)
     }
 
     return (
