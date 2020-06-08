@@ -2,6 +2,9 @@ import React,{useState} from 'react';
 import { Layout, Menu, Breadcrumb, Icon } from 'antd';
 import '../static/css/AdminIndex.css'
 
+import {Route} from 'react-router-dom'
+import AddArticle from './AddArticle'
+
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
@@ -12,7 +15,7 @@ function AdminIndex (){
   const onCollapse = collapsed => {
     setCollapsed(collapsed)
   };
-  
+
     return (
         <Layout style={{ minHeight: '100vh' }}>
         <Sider  collapsible collapsed={collapsed} onCollapse={onCollapse}>
@@ -53,7 +56,13 @@ function AdminIndex (){
               <Breadcrumb.Item>后台管理</Breadcrumb.Item>
               <Breadcrumb.Item>工作台</Breadcrumb.Item>
             </Breadcrumb>
-            <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>博客工作台.</div>
+            <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
+                <div style={{padding: 24, background: '#fff', minHeight: 360}}>
+                  <div>
+                      <Route path='/index/' exact component={AddArticle}></Route>
+                  </div>
+                </div>
+            </div>
           </Content>
           <Footer style={{ textAlign: 'center' }}>JSPang.com</Footer>
         </Layout>
