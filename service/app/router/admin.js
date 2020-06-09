@@ -8,4 +8,5 @@ module.exports = app => {
     router.post('/admin/addArticle', adminauth, controller.admin.main.addArticle)
     router.post('/admin/updateArticle', adminauth, controller.admin.main.updateArticle)
     router.post('/admin/getArticleList', adminauth, controller.admin.main.getArticleList)
+    router.get('/admin/deleteArticleById/:id', adminauth, controller.admin.main.deleteArticleById)
 }
