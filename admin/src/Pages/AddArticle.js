@@ -98,7 +98,7 @@ function AddArticle(props){
         dataProps.article_content = articleContent
         dataProps.introduce = introducemd
         let datetext = showDate.replace('-', '/') // 把字符串转换成时间戳
-        dataProps.addTime = (new Date(datetext).getTime())
+        dataProps.addTime = (new Date(datetext).getTime()/1000)
 
         if(articleId === 0){
             console.log('articleId: ' + articleId)
