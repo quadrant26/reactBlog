@@ -55,6 +55,21 @@ class MainController extends Controller{
         }
     }
 
+    // 获得文章列表
+    async getArticleList (){
+        let sql = 'SELECT article.id as id, ' +
+            'article.title as title, ' +
+            'article.introduce as introduce,' +
+            "FROM_UNIXTIME(article.addTime, '%Y-%m-%d ') as addTime, " +
+            'type.typeName as typeName, ' + 
+            'article.view_count as view_count ' + 
+            'FROM article LEFT JOIN type on article.type_id = type.id ' +
+            'ORDER BY article.id DESC '
+        
+        const resList = await this.app.mysql.query(sql);
+        this.ctx.body = {list: resList}
+    }
+
 }
 
 module.exports = MainController

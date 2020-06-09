@@ -9,6 +9,21 @@ const {confirm} = Modal;
 function ArticleList (props){
     const [list, setList] = useState([])
 
+    const getList = () => {
+        axios({
+            method: 'post',
+            url: servicePath.getArticleList,
+            withCredentials: true,
+            header: {'Access-Control-Allow-Origin': '*'}
+        }).then( res => {
+            setList(res.data.list)
+        })
+    }
+
+    useEffect( () => {
+        getList();
+    }, [])
+
     return (
         <div>
             <List
