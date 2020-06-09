@@ -33,7 +33,6 @@ class MainController extends Controller{
     // 添加文章
     async addArticle(){
         let tempAricle = this.ctx.request.body;
-        console.log(tempAricle);
         const result = await this.app.mysql.insert('article', tempAricle)
         const insertSucces = result.affectedRows === 1
         const insertId = result.insertId;
@@ -41,6 +40,18 @@ class MainController extends Controller{
         this.ctx.body = {
             isSuccess: insertSucces,
             insertId: insertId
+        }
+    }
+
+    // 修改文章
+    async updateArticle (){
+        let tempAricle = this.ctx.request.body;
+
+        const result = await this.app.mysql.update('article', tempAricle)
+        const insertSucces = result.affectedRows === 1
+
+        this.ctx.body = {
+            isSuccess: insertSucces,
         }
     }
 
