@@ -24,6 +24,7 @@ function ArticleList (props){
         getList();
     }, [])
 
+    // 删除文章
     const deleteArticle = (id) => {
         confirm({
             title: '确定要删除这篇文章吗？',
@@ -38,6 +39,11 @@ function ArticleList (props){
                 message.success("取消了删除操作")
             }
         })
+    }
+
+    // 修改文章
+    const updateArticleById = (id) => {
+        props.history.push('/index/add/' + id)
     }
 
     return (
@@ -89,7 +95,7 @@ function ArticleList (props){
                             </Col>
 
                             <Col span={4}>
-                              <Button type="primary" >修改</Button>&nbsp;
+                              <Button type="primary" onClick={ () => {updateArticleById(item.id)}}>修改</Button>&nbsp;
 
                               <Button onClick={ () => {deleteArticle(item.id)}}>删除 </Button>
                             </Col>

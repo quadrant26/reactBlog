@@ -38,8 +38,41 @@ function AddArticle(props){
             }
         })
     }
+    // 获取文章内容
+    const getArticleById = (id) => {
+        
+        axios({
+            url: servicePath.getArticleById + id,
+            method: 'post',
+            header: { 'Access-Control-Allow-Origin':'*' },
+            withCredentials: true
+        }).then( res => {
+            if( res.data.data === "没有登录"){
+                localStorage.removeItem("openId")
+                props.history.push('/')
+            }else{
+                var data = res.data.data[0]
+                setArticleTitle(data.title);
+                setArticleContent(data.article_content);
+                let html=marked(res.data.data[0].article_content)
+                setMarkdownContent(html)
+                setIntroducemd(data.introduce);
+                let tmpInt = marked(res.data.data[0].introduce)
+                setIntroducehtml(tmpInt)
+                setShowDate(data.addTime)
+                setSelectType(data.typeId)
+            }
+        })
+    }
     useEffect(() => {
         getTypeInfo()
+        // 获得文章标题
+        let tmpId = props.match.params.id
+        if( tmpId ){
+            getArticleById(tmpId);
+            setArticleId(tmpId)
+        }
+        
     }, [])
 
     // 选择文章类型
@@ -141,6 +174,7 @@ function AddArticle(props){
                     <Row gutter={10} >
                         <Col span={20}>
                             <Input 
+                                value={articleTitle}
                                 placeholder="博客标题" 
                                 onChange={ e => setArticleTitle(e.target.value)}
                                 size="large" />
@@ -188,6 +222,7 @@ function AddArticle(props){
                         <br/>
                         <TextArea 
                             rows={4} 
+                            value={introducemd}
                             placeholder="文章简介"
                             onChange={changeIntroduce}
                             onPressEnter={changeIntroduce}

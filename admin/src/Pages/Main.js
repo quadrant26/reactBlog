@@ -12,7 +12,7 @@ function Main (){
             <Route path="/" exact component={Login} />
             <Route path="/index/" exact component={AdminIndex} />
             <Route path="/index/add" exact component={AddArticle} />
-            <Route path="/index/add:id" exact component={AddArticle} />
+            <Route path="/index/add/:id" exact component={AddArticle} />
             <Route path="/index/list" exact component={ArticleList} />
         </Router>
     )
